@@ -564,6 +564,32 @@ class TPCreator(object):
         if self.lang == 'js' and 'js' in data.keys():
             fileList = fileList + data['js']
 
+        # begin copy spine-runtime
+        cocos.Logging.info(MultiLanguage.get_string('NEW_INFO_STEP_COPY_SPINE_RUNTIME'))
+        print("cocos_root:" + self.cocos_root)
+        print("project_dir:" + self.project_dir)
+        for index in range(len(data["spine"])):
+            srcfile = os.path.join(self.cocos_root, data["spine"][index])
+            # 修改目标文件路径
+            dstfile = os.path.join(dst, data["spine"][index]) 
+
+            srcfile = cocos.add_path_prefix(srcfile)
+            dstfile = cocos.add_path_prefix(dstfile)
+
+            if not os.path.exists(os.path.dirname(dstfile)):
+                os.makedirs(cocos.add_path_prefix(os.path.dirname(dstfile)))
+
+            # copy file or folder
+            if os.path.exists(srcfile):
+                if os.path.isdir(srcfile):
+                    if os.path.exists(dstfile):
+                        shutil.rmtree(dstfile)
+                    shutil.copytree(srcfile, dstfile)
+                else:
+                    if os.path.exists(dstfile):
+                        os.remove(dstfile)
+                    shutil.copy2(srcfile, dstfile)
+
         # begin copy engine
         cocos.Logging.info(MultiLanguage.get_string('NEW_INFO_STEP_COPY_X'))
 
