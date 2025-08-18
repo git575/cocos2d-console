@@ -15,6 +15,7 @@ import os
 import sys
 import json
 import locale
+import codecs
 
 def get_current_path():
     if getattr(sys, 'frozen', None):
@@ -93,9 +94,8 @@ class MultiLanguage(object):
 
         # get the strings info
         if os.path.isfile(cfg_file_path):
-            f = open(cfg_file_path)
-            self.cfg_info = json.load(f, encoding='utf-8')
-            f.close()
+            with codecs.open(cfg_file_path, "r", "utf-8") as f:
+                self.cfg_info = json.load(f)
 
             if self.cfg_info.has_key(cur_lang_key):
                 self.cur_lang_strings = self.cfg_info[cur_lang_key]

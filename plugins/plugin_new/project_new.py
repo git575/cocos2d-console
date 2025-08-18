@@ -570,7 +570,7 @@ class TPCreator(object):
         print("project_dir:" + self.project_dir)
         for index in range(len(data["spine"])):
             srcfile = os.path.join(self.cocos_root, data["spine"][index])
-            # 修改目标文件路径
+            # modify path
             dstfile = os.path.join(dst, data["spine"][index]) 
 
             srcfile = cocos.add_path_prefix(srcfile)
